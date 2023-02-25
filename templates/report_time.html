@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'report' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сформировать</button>
+
+    <table border="1">
+        <tr>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Должность</td>
+            <td>Количество часов за полмесяца</td>
+            <td>Количество часов за месяц</td>
+            <td>Работал в отпуске</td>
+            <td>Работал на больничном</td>
+            <td>В отпуске</td>
+            <td>На больничном</td>
+        </tr>
+        {#            {% for dom in date_of_half_month %}#}
+        {#                {{ dom.first_name }}#}
+        {#            {% endfor %}#}
+
+        {% if date_of_month %}
+            {% for dom in date_of_month %}
+                <tr>
+                    <td>{{ dom.first_name }}</td>
+                    <td>{{ dom.last_name }}</td>
+                    <td>{{ dom.roles }}</td>
+                    {% for dohm in date_of_half_month %}
+                        {% if dom.user_id == dohm.user_id %}
+                            <td>{{ dohm.total_hours }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ dom.total_hours }}</td>
+                    <td>{{ dom.hours_work_in_vacations }}</td>
+                    <td>{{ dom.hours_work_in_sick_leave }}</td>
+                    <td>
+                        {% if dom.time_in_vacations %}
+                            {{ dom.time_in_vacations }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if dom.time_in_sick_leave %}
+                            {{ dom.time_in_sick_leave }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            {% for dohm in date_of_half_month %}
+                <tr>
+                    <td>{{ dohm.first_name }}</td>
+                    <td>{{ dohm.last_name }}</td>
+                    <td>{{ dohm.roles }}</td>
+                    <td>{{ dohm.total_hours }}</td>
+                    <td> 0.0</td>
+                    <td>{{ dohm.hours_work_in_vacations }}</td>
+                    <td>{{ dohm.hours_work_in_sick_leave }}</td>
+                    <td>
+                        {% if dohm.time_in_vacations %}
+                            {{ dohm.time_in_vacations }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if dohm.time_in_sick_leave %}
+                            {{ dohm.time_in_sick_leave }}
+                        {% endif %}
+                    </td>
+                    <td>{{ dohm.user_id }}</td>
+
+                </tr>
+            {% endfor %}
+        {% endif %}
+
+    </table>
+</form>
+</body>
+</html>
