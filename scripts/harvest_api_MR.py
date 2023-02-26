@@ -3,7 +3,7 @@ import requests
 import os
 
 
-load_dotenv(r"D:\PycharmProj\working_projects\time-managment-internal\.env")
+load_dotenv(r"")
 TOKEN = os.getenv("TOKEN")
 ACCOUNT_ID = os.getenv("ACCOUNTID")
 
