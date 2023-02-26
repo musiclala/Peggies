@@ -3,7 +3,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 
-load_dotenv(r"D:\PycharmProj\working_projects\time-managment-internal\.env")
+load_dotenv(r"")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
